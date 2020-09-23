@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="AHT_FeatureProduct::featureproduct"
+            title="Frature Product"
+            module="AHT_FeatureProduct"
+            sortOrder="20"
+            resource="AHT_FeatureProduct::featureproduct"
+        />
+        <add
+            id="AHT_FeatureProduct::index"
+            title="Manage Feature Product"
+            module="AHT_FeatureProduct"
+            sortOrder="25"
+            parent="AHT_FeatureProduct::featureproduct"
+            action="featureproduct/index/"
+            resource="AHT_FeatureProduct::index"
+        />
+    </menu>
+</config>

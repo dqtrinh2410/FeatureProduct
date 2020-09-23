@@ -1,0 +1,21 @@
+<?php
+    $products = $block->getProductData($block->getData('product_count'));
+    $enableFeatureWidget = $block->getHelper()->getFeatureConfig('is_enabled');
+?>
+
+<?php if ($enableFeatureWidget): ?>
+    <div class="list-feature-products">
+        <?php foreach ($products as $p): ?>
+            <?php
+                $imagePath = $block->getStoreManager()->getStore()
+                        ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product/' . $p['image'];
+            ?>
+            <div class="feature-product">
+                <a href="<?= $block->getProductLink($p['entity_id']) ?>">
+                    <img src="<?= $imagePath ?>" />
+                </a>
+                <div><h4><?= $p['name'] ?></h4></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

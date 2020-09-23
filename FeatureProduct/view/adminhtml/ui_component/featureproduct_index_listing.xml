@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <!-- Define data provider name and spinner name and SOME button -->
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">featureproduct_index_listing.featureproduct_index_listing_data_source</item>
+
+            <item name="deps" xsi:type="string">featureproduct_index_listing.featureproduct_index_listing_data_source</item>
+            <!-- the format here is uicomponentname.datasourcename -->
+        </item>
+
+        <!-- Spinner is uicomponentfile Name -->
+        <item name="spinner" xsi:type="string">featureproduct_index_listing</item>
+
+        <!-- ADD new button -->
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Thêm mới</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/add</item>
+            </item>
+        </item>
+    </argument>
+
+    <!-- Declare Data Source details -->
+    <!-- the dataSource name is datasourcename -->
+    <dataSource name="featureproduct_index_listing_data_source">
+
+        <!-- this is data source name, this is used at many places -->
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <!--AHT\FeatureProduct\Model\FeatureProduct-->
+            <!--Magento\Framework\View\Element\UiComponent\DataProvider-->
+            <argument name="class" xsi:type="string">AHT\FeatureProduct\Model\FeatureProduct\FeatureDataProvider</argument>
+            <!-- Pfay\Contacts\Model\Contact\DataProvider -->
+            <!-- the dataSource name is datasourcename -->
+            <argument name="name" xsi:type="string">featureproduct_index_listing_data_source</argument>
+
+            <!-- Put your Database table primary Key -->
+            <argument name="primaryFieldName" xsi:type="string">feature_id</argument>
+
+            <!-- It can be user define -->
+            <argument name="requestFieldName" xsi:type="string">feature_id</argument>
+
+            <!-- the field used in ajax url's of grid. just define this as id -->
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">feature_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <!-- Same as spinner name -->
+    <columns name="featureproduct_index_listing">
+        <!-- Adding column to Grid -->
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">product_listing.product_listing.product_columns.actions</item>
+                    <item name="target" xsi:type="string">applyAction</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">edit</item>
+                        <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <selectionsColumn name="ids" sortOrder="0">
+            <settings>
+                <indexField>feature_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="feature_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Feature ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="thumbnail" class="Magento\Catalog\Ui\Component\Listing\Columns\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail" sortOrder="20">
+            <settings>
+                <altField>name</altField>
+                <hasPreview>1</hasPreview>
+                <addField>true</addField>
+                <label translate="true">Thumbnail</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="name" sortOrder="30">
+            <settings>
+                <addField>true</addField>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <column name="type_id" component="Magento_Ui/js/grid/columns/select" sortOrder="40">
+            <settings>
+                <options class="Magento\Catalog\Model\Product\Type"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Type</label>
+            </settings>
+        </column>
+        <column name="attribute_set_id" class="Magento\Catalog\Ui\Component\Listing\Columns\AttributeSetId" component="Magento_Ui/js/grid/columns/select" sortOrder="50">
+            <settings>
+                <options class="Magento\Catalog\Model\Product\AttributeSet\Options"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Attribute Set</label>
+            </settings>
+        </column>
+        <column name="sku" sortOrder="60">
+            <settings>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">SKU</label>
+            </settings>
+        </column>
+        <column name="price" class="Magento\Catalog\Ui\Component\Listing\Columns\Price" sortOrder="70">
+            <settings>
+                <addField>true</addField>
+                <filter>textRange</filter>
+                <label translate="true">Price</label>
+            </settings>
+        </column>
+        <column name="visibility" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+            <settings>
+                <addField>true</addField>
+                <options class="Magento\Catalog\Model\Product\Visibility"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Visibility</label>
+            </settings>
+        </column>
+        <column name="status" component="Magento_Ui/js/grid/columns/select" sortOrder="90">
+            <settings>
+                <addField>true</addField>
+                <options class="Magento\Catalog\Model\Product\Attribute\Source\Status"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+
+        <actionsColumn name="actions" class="AHT\FeatureProduct\Ui\Component\Listing\Column\BlockActions">
+            <settings>
+                <indexField>feature_id</indexField>
+            </settings>
+        </actionsColumn>
+
+    </columns>
+</listing>
